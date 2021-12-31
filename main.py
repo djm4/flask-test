@@ -15,3 +15,9 @@ def test(test_names):
     else:
         tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
+
+@app.cli.command()
+def deploy():
+    """ Run deployment tasks, if any. Currently a no-op, but provided for completeness"""
+    pass
