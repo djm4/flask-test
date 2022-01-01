@@ -27,6 +27,8 @@ of London. Thus the current endpoint is guaranteed to work:
 In principle, others will work, but are dependent on data being available
 in the source API and city locations being present in *app/constants.py*.
 
+The code exposes a basic Swagger API on the /apidocs endpoint.
+
 ## Installation
 
 Check the code out from github into a directory.

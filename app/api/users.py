@@ -7,6 +7,36 @@ from ..constants import cities, units
 
 @api.route('/users_in_or_near/<city>/<unit>/<distance>')
 def get_users_in_or_near(city, unit, distance):
+    """
+    ---
+    parameters:
+      - name: city
+        in: path
+        required: true
+        type: string
+      - name: unit
+        in: path
+        required: true
+        type: string
+        enum:
+          - miles
+          - nautical_miles
+          - kilometers
+          - meters
+          - feet
+          - inches
+          - radians
+          - degrees
+      - name: distance
+        in: path
+        required: true
+        type: number
+    responses:
+      200:
+        description: Success
+      400:
+        description: Invalid parameters
+    """
     if unit in units:
         unit = units[unit]
     else:
