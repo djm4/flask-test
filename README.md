@@ -79,11 +79,11 @@ If you don't want to install the code, or Flask, you can deploy from
 a Docker container hosted on my Docker hub. This command will start a 
 server on port 5000, but the Docker command can be edited to change that.
 
-    $ docker container run --name 156379 -d -p 8000:5000 djm4/156379:latest
+    $ docker container run --name flask-test -d -p 5000:5000 djm4/flask-test:latest
 
 If have cloned the git repo, you can build your own Docker image from it using:
 
-    $ docker image build -t 156379:latest .
+    $ docker image build -t flask-test:latest .
 
 ## Links
 
