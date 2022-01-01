@@ -3,6 +3,7 @@ from app.user import User
 
 
 class UserCase(unittest.TestCase):
+    """Performs tests relating to the User object"""
     def test_user(self):
         user = User(
             {

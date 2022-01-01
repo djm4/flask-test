@@ -3,7 +3,7 @@ from app.user import Location
 
 
 class LocationTestCase(unittest.TestCase):
-
+    """Performs tests relating to the Location object"""
     def test_location(self):
         location_1 = Location(0, 0)
         location_2 = Location(0, 1)

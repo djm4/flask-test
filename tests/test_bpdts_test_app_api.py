@@ -1,12 +1,21 @@
 import unittest
+from app import create_app
 from app.bpdts_test_app_api import BPDTSTestAppAPI
 from app.user import User, Location
+from app.api_wrappper import APIWrapper
 
 
 class BPDTSTestAppAPITestCase(unittest.TestCase):
+    """Performs tests relating to the classes that call the BPDTS test API internally"""
     def setUp(self) -> None:
+        self.app = create_app('testing')
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         self.liveAPI = BPDTSTestAppAPI(base_url='https://bpdts-test-app.herokuapp.com')
         self.mockAPI = BPDTSTestAppAPI(base_url='mock')
+
+    def tearDown(self):
+        self.app_context.pop()
 
     def test_instructions(self):
         live_instructions = self.liveAPI.instructions()
@@ -116,6 +125,37 @@ class BPDTSTestAppAPITestCase(unittest.TestCase):
         self.assertEqual(first_user_obj.location.latitude, 34.003135, 'User object latitude should be 34.003135')
         self.assertEqual(first_user_obj.location.longitude, -117.7228641,
                          'User object longitude should be -117.7228641')
+
+    def test_api_wrapper(self):
+        api = APIWrapper()
+        self.assertIn('todo', api.instructions(), 'instructions endpoint should have todo as a key')
+        user = api.user(1)
+        self.assertIsInstance(user, User, 'user endpoint should return a User object')
+        self.assertEqual(user.first_name, 'Maurise', 'user\'s first name should be Maurise')
+        self.assertIsInstance(user.location, Location, 'user\'s location should be a Location object')
+        self.assertEqual(user.location.get_point(), (34.003135, -117.7228641),
+                         'user\'s location should be at the specified coordinates')
+
+        user_list = api.users()
+        self.assertEqual(len(user_list), 5, 'users endpoint should return five users')
+        for user in user_list:
+            self.assertIsInstance(user, User, 'users endpoint should return an list of User objects')
+            self.assertIsInstance(user.location, Location, 'users endpoint should return users with Location objects')
+        self.assertEqual(user_list[0].id, 1, 'first use ID should be one')
+        self.assertEqual(user_list[1].last_name, 'Wyndam-Pryce', 'second user name should be Wyndam-Pryce')
+        self.assertEqual(user_list[2].email, 'bhalgarth1@timesonline.co.uk',
+                         'third user email should be bhalgarth1@timesonline.co.uk')
+        self.assertTrue(user_list[3].location.has_points(), 'fourth user should have a valid location')
+        self.assertFalse(user_list[4].location.has_points(), 'fifth user should have a null location')
+
+        city_user_list = api.city_users('Kax')
+        self.assertEqual(len(city_user_list), 2, 'city_user endpoint should return two users')
+        for user in city_user_list:
+            self.assertIsInstance(user, User, 'city_users endpoint should return an list of User objects')
+            self.assertIsInstance(user.location, Location,
+                                  'city_users endpoint should return users with Location objects')
+        self.assertEqual(city_user_list[0].id, 1, 'first user ID should be one')
+        self.assertEqual(city_user_list[1].id, 854, 'second user ID should be 854')
 
 
 if __name__ == '__main__':

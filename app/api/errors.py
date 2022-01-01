@@ -13,12 +13,14 @@ def bad_request(message):
 
 
 def unauthorized(message):
+    """Note - currently unused but included for completeness"""
     response = jsonify({'error': 'unauthorized', 'message': message})
     response.status_code = 401
     return response
 
 
 def forbidden(message):
+    """Note - currently unused but included for completeness"""
     response = jsonify({'error': 'forbidden', 'message': message})
     response.status_code = 403
     return response

@@ -3,23 +3,26 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-
+    """Generic config object"""
     @staticmethod
     def init_app(app):
         pass
 
 
 class DevelopmentConfig(Config):
+    """Config for development"""
     DEBUG = True
     BPDTS_API_URL = 'https://bpdts-test-app.herokuapp.com'
 
 
 class TestingConfig(Config):
+    """Config for testing"""
     TESTING = True
     BPDTS_API_URL = 'mock'
 
 
 class ProductionConfig(Config):
+    """Config for production"""
     BPDTS_API_URL = 'https://bpdts-test-app.herokuapp.com'
 
     @classmethod
@@ -28,6 +31,7 @@ class ProductionConfig(Config):
 
 
 class DockerConfig(Config):
+    """Config for Dockerisation"""
     BPDTS_API_URL = 'https://bpdts-test-app.herokuapp.com'
 
     @classmethod

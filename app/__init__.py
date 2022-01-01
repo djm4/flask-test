@@ -6,6 +6,7 @@ swagger = Swagger()
 
 
 def create_app(config_name):
+    """Standard Flask App factory to allow for different configurations"""
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)

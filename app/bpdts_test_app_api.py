@@ -2,8 +2,9 @@ import requests
 
 
 class BPDTSTestAppAPI:
-
+    """Direct wrapper for the BPDTS test API. All methods return plain JSON as returned by the API"""
     def __init__(self, base_url=None):
+        """Sets the base URL for the API. May be passed the special value 'mock', in which case responses are mocked"""
         self.base_url = base_url
 
     def api_request(self, url=None):
