@@ -40,6 +40,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200, 'Valid query should generate a 200 response code')
         json_response = json.loads(response.get_data(as_text=True))
         self.assertEqual(len(json_response), 3, 'Valid query should generate three users')
-        id_list = [x['id'] for x in json_response.values()]
+        self.assertIsInstance(json_response, list)
+        id_list = [x['id'] for x in json_response]
         id_list.sort()
         self.assertEqual(id_list, [1, 2, 854], 'Valid query should generate the specified ID list')

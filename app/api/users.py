@@ -61,4 +61,4 @@ def get_users_in_or_near(city, unit, distance):
             if separation is not None and separation <= distance:
                 user_list[user.id] = user.to_dict()
 
-    return jsonify(user_list)
+    return jsonify([x for x in user_list.values()])
